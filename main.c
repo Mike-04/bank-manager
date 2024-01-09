@@ -3,7 +3,7 @@
 # include <string.h>
 # include "utils.h"
 # include "calendar.h"
-// #include "xlsxwriter.h"
+#include "xlsxwriter.h"
 
 int is_logged = 0, next_user_id=0; char user_name[100];
 struct Account
@@ -355,64 +355,64 @@ void All_Transaction(int id)
 }
 void Export_All_Transaction(int id)
 {
-    // lxw_workbook *workbook = workbook_new("transaction.xlsx");
-    // lxw_worksheet *worksheet = workbook_add_worksheet(workbook, "Sheet1");
+    lxw_workbook *workbook = workbook_new("transaction.xlsx");
+    lxw_worksheet *worksheet = workbook_add_worksheet(workbook, "Sheet1");
 
-    // if (worksheet) {
-    //     lxw_format *bold_format = workbook_add_format(workbook);
-    //     format_set_bold(bold_format);
+    if (worksheet) {
+        lxw_format *bold_format = workbook_add_format(workbook);
+        format_set_bold(bold_format);
 
-    //     int linie = 1;
-    //     worksheet_write_string(worksheet, linie, 1, "User Name", bold_format);
+        int linie = 1;
+        worksheet_write_string(worksheet, linie, 1, "User Name", bold_format);
 
-    //     float input = 0, output = 0;
-    //     for (int i = 1; i <= N_T; i++) 
-    //     {
-    //         if (T[i].id_from == id) 
-    //         {
-    //             linie++;
-    //             char data[20] = "";
-    //             data_to_str(T[i].data, data);
-    //             worksheet_write_number(worksheet, linie, 1, -T[i].amount, NULL);
-    //             worksheet_write_string(worksheet, linie, 2, data, NULL);
-    //             worksheet_write_string(worksheet, linie, 5, T[i].desc, NULL);
-    //             output += T[i].amount;
-    //         }
+        float input = 0, output = 0;
+        for (int i = 1; i <= N_T; i++) 
+        {
+            if (T[i].id_from == id) 
+            {
+                linie++;
+                char data[20] = "";
+                data_to_str(T[i].data, data);
+                worksheet_write_number(worksheet, linie, 1, -T[i].amount, NULL);
+                worksheet_write_string(worksheet, linie, 2, data, NULL);
+                worksheet_write_string(worksheet, linie, 5, T[i].desc, NULL);
+                output += T[i].amount;
+            }
 
-    //         if (T[i].id_to == id) 
-    //         {
-    //             linie++;
-    //             char data[20] = "";
-    //             data_to_str(T[i].data, data);
-    //             worksheet_write_number(worksheet, linie, 1, T[i].amount, NULL);
-    //             worksheet_write_string(worksheet, linie, 2, data, NULL);
-    //             worksheet_write_string(worksheet, linie, 5, T[i].desc, NULL);
-    //             input += T[i].amount;
-    //         }
-    //     }
+            if (T[i].id_to == id) 
+            {
+                linie++;
+                char data[20] = "";
+                data_to_str(T[i].data, data);
+                worksheet_write_number(worksheet, linie, 1, T[i].amount, NULL);
+                worksheet_write_string(worksheet, linie, 2, data, NULL);
+                worksheet_write_string(worksheet, linie, 5, T[i].desc, NULL);
+                input += T[i].amount;
+            }
+        }
 
-    //     linie += 3;
-    //     worksheet_write_string(worksheet, linie, 1, "Total input", bold_format);
-    //     worksheet_write_number(worksheet, linie, 2, input, NULL);
+        linie += 3;
+        worksheet_write_string(worksheet, linie, 1, "Total input", bold_format);
+        worksheet_write_number(worksheet, linie, 2, input, NULL);
 
-    //     linie += 2;
-    //     worksheet_write_string(worksheet, linie, 1, "Total output", bold_format);
-    //     worksheet_write_number(worksheet, linie, 2, output, NULL);
+        linie += 2;
+        worksheet_write_string(worksheet, linie, 1, "Total output", bold_format);
+        worksheet_write_number(worksheet, linie, 2, output, NULL);
 
-    //     linie += 2;
-    //     worksheet_write_string(worksheet, linie, 1, "SOLD: ", bold_format);
-    //     worksheet_write_number(worksheet, linie, 2, input - output, NULL);
+        linie += 2;
+        worksheet_write_string(worksheet, linie, 1, "SOLD: ", bold_format);
+        worksheet_write_number(worksheet, linie, 2, input - output, NULL);
 
-    //     workbook_close(workbook);
+        workbook_close(workbook);
 
-    //     FILE *f_hist = fopen("history.txt", "a");
-    //     char timp[20];
-    //     Time(timp);
-    //     char data[20];
-    //     data_to_str(DC, data);
-    //     fprintf(f_hist, "%d\n%s %s %s\n", is_logged, data, timp, "export all transactions to Excel");
-    //     fclose(f_hist);
-    // }
+        FILE *f_hist = fopen("history.txt", "a");
+        char timp[20];
+        Time(timp);
+        char data[20];
+        data_to_str(DC, data);
+        fprintf(f_hist, "%d\n%s %s %s\n", is_logged, data, timp, "export all transactions to Excel");
+        fclose(f_hist);
+    }
 }
 
 void Account_Statement(int id)
