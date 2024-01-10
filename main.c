@@ -19,7 +19,7 @@ struct Transaction {
   float amount;
 } T[10000];
 
-int N_A = 0, N_T = 0;
+int number_account = 0, number_transaction = 0;
 int validate_option(char *s, int n) {
   // Function to validate user input option
   char val_op[10][10] = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
@@ -68,11 +68,11 @@ int login() {
   // Function to validate user login credentials
   char user[100], pass[100];
   int i;
-  printf("User name : ");
+  printf("User name:");
   scanf("%s", user);
-  printf("Password  : ");
+  printf("Password:");
   scanf("%s", pass);
-  for (i = 1; i <= N_A; i++)
+  for (i = 1; i <= number_account; i++)
     if (strcmp(user, A[i].user) == 0 && strcmp(pass, A[i].pass) == 0) {
       strcpy(user_name, A[i].name);
       FILE *f_hist = fopen("history.txt", "a");
@@ -97,8 +97,8 @@ void sign_up() {
     getchar();
     printf("Name:");
     gets(name);
-    if (!isalpha_or_space(name)) {
-      printf("Name should be alfa or space\n");
+    if (!letters_spaces(name)) {
+      printf("Name should contain letters or spaces\n");
       ok = 0;
     }
 
@@ -108,12 +108,12 @@ void sign_up() {
     ok = 1;
     printf("New user name : ");
     gets(user);
-    if (!isalpha_or_number(user)) {
-      printf("User sould be alfa or number\n");
+    if (!letters_numbers(user)) {
+      printf("User sould containt letters or numbers\n");
       ok = 0;
     } else {
       int i;
-      for (i = 1; i <= N_A; i++) {
+      for (i = 1; i <= number_account; i++) {
         if (strcmp(user, A[i].user) == 0) {
           printf("User already exist\n");
           ok = 0;
@@ -127,8 +127,8 @@ void sign_up() {
     ok = 1;
     printf("New password:");
     gets(pass);
-    if (!isalpha_or_number(pass)) {
-      printf("Password sould be alfa or number\n");
+    if (!letters_numbers(pass)) {
+      printf("Password sould contain letters or numbers\n");
       ok = 0;
     }
     char conf_pass[100];
@@ -141,11 +141,11 @@ void sign_up() {
 
   } while (!ok);
   next_user_id++;
-  N_A++;
-  A[N_A].id = next_user_id;
-  strcpy(A[N_A].user, user);
-  strcpy(A[N_A].pass, pass);
-  strcpy(A[N_A].name, name);
+  number_account++;
+  A[number_account].id = next_user_id;
+  strcpy(A[number_account].user, user);
+  strcpy(A[number_account].pass, pass);
+  strcpy(A[number_account].name, name);
   FILE *F = fopen("login.txt", "a");
   fprintf(F, "%d %s %s %s\n", next_user_id, user, pass, name);
   fclose(F);
@@ -181,29 +181,29 @@ int load_data_from_file() {
   if (f_trans == NULL)
     return 0;
 
-  N_A = 0;
+  number_account = 0;
   while (!feof(f_login)) {
-    N_A++;
-    fscanf(f_login, "%d %s %s", &A[N_A].id, &A[N_A].user, &A[N_A].pass);
-    fgets(A[N_A].name, 100, f_login);
-    remove_null(A[N_A].name);
-    remove_beginning_space(A[N_A].name);
+    number_account++;
+    fscanf(f_login, "%d %s %s", &A[number_account].id, &A[number_account].user, &A[number_account].pass);
+    fgets(A[number_account].name, 100, f_login);
+    remove_null(A[number_account].name);
+    remove_beginning_space(A[number_account].name);
     if (!feof(f_login))
-      if (A[N_A].id > next_user_id)
-        next_user_id = A[N_A].id;
+      if (A[number_account].id > next_user_id)
+        next_user_id = A[number_account].id;
   }
-  N_A--;
+  number_account--;
   fclose(f_login);
-  N_T = 0;
+  number_transaction = 0;
   while (!feof(f_trans)) {
-    N_T++;
-    fscanf(f_trans, "%d %d %f %d %d %d", &T[N_T].id_from, &T[N_T].id_to,
-           &T[N_T].amount, &T[N_T].data.zi, &T[N_T].data.luna, &T[N_T].data.an);
-    fgets(T[N_T].desc, 100, f_trans);
-    remove_beginning_space(T[N_T].desc);
-    remove_null(T[N_T].desc);
+    number_transaction++;
+    fscanf(f_trans, "%d %d %f %d %d %d", &T[number_transaction].id_from, &T[number_transaction].id_to,
+           &T[number_transaction].amount, &T[number_transaction].data.zi, &T[number_transaction].data.luna, &T[number_transaction].data.an);
+    fgets(T[number_transaction].desc, 100, f_trans);
+    remove_beginning_space(T[number_transaction].desc);
+    remove_null(T[number_transaction].desc);
   }
-  N_T--;
+  number_transaction--;
   fclose(f_trans);
   /*
   int i;
@@ -216,7 +216,7 @@ float user_balance(int id) {
   // Function to calculate user balance based on transactions
   float s = 0;
   int i;
-  for (i = 1; i <= N_T; i++) {
+  for (i = 1; i <= number_transaction; i++) {
     if (T[i].id_from == id)
       s -= T[i].amount;
     if (T[i].id_to == id)
@@ -230,7 +230,7 @@ void print_user_balance(int id) {
   char data[20];
   data_to_str(DC, data);
   printf("%s\n", user_name);
-  printf("Your sold %8.2f     current date %s", sold, data);
+  printf("Your sold %8.2f current date %s", sold, data);
   FILE *f_hist = fopen("history.txt", "a");
   char timp[20];
   set_current_time(timp);
@@ -243,7 +243,7 @@ void save_transaction() {
   // Function to save transactions to a file
   FILE *F = fopen("transaction.txt", "w");
   int i;
-  for (i = 1; i <= N_T; i++)
+  for (i = 1; i <= number_transaction; i++)
     fprintf(F, "%d %d %.2f %d %d %d %s\n", T[i].id_from, T[i].id_to,
             T[i].amount, T[i].data.zi, T[i].data.luna, T[i].data.an, T[i].desc);
   fclose(F);
@@ -256,12 +256,12 @@ void deposit(int id) {
   scanf("%s", sir);
   sum = validate_number(sir);
   if (sum) {
-    N_T++;
-    T[N_T].amount = sum;
-    strcpy(T[N_T].desc, "deposit");
-    T[N_T].id_to = id;
-    T[N_T].id_from = 0;
-    T[N_T].data = DC;
+    number_transaction++;
+    T[number_transaction].amount = sum;
+    strcpy(T[number_transaction].desc, "deposit");
+    T[number_transaction].id_to = id;
+    T[number_transaction].id_from = 0;
+    T[number_transaction].data = DC;
     save_transaction();
 
     FILE *f_hist = fopen("history.txt", "a");
@@ -284,12 +284,12 @@ void withdraw(int id) {
   sum = validate_number(sir);
   if (sum) {
     if (sum <= user_balance(id)) {
-      N_T++;
-      T[N_T].amount = sum;
-      strcpy(T[N_T].desc, "withdrawals");
-      T[N_T].id_to = 0;
-      T[N_T].id_from = id;
-      T[N_T].data = DC;
+      number_transaction++;
+      T[number_transaction].amount = sum;
+      strcpy(T[number_transaction].desc, "withdrawals");
+      T[number_transaction].id_to = 0;
+      T[number_transaction].id_from = id;
+      T[number_transaction].data = DC;
       save_transaction();
 
       FILE *f_hist = fopen("history.txt", "a");
@@ -308,7 +308,7 @@ void withdraw(int id) {
 int id_existent(int x) {
   // Function to check if a given ID exists in the user accounts
   int i;
-  for (i = 1; i <= N_A; i++)
+  for (i = 1; i <= number_account; i++)
     if (A[i].id == x)
       return i;
   return 0;
@@ -329,17 +329,17 @@ void transfer(int id) {
     sum = validate_number(sir);
     if (sum)
       if (sum <= user_balance(id)) {
-        N_T++;
-        T[N_T].amount = sum;
+        number_transaction++;
+        T[number_transaction].amount = sum;
         char desc[200] = "transfer to ";
         strcat(desc, A[poz].name);
         strcat(desc, "    from ");
         strcat(desc, user_name);
 
-        strcpy(T[N_T].desc, desc);
-        T[N_T].id_to = id_to_transfer;
-        T[N_T].id_from = id;
-        T[N_T].data = DC;
+        strcpy(T[number_transaction].desc, desc);
+        T[number_transaction].id_to = id_to_transfer;
+        T[number_transaction].id_from = id;
+        T[number_transaction].data = DC;
         save_transaction();
 
         FILE *f_hist = fopen("history.txt", "a");
@@ -359,7 +359,7 @@ void transfer(int id) {
 void print_all_transactions(int id) {
   // Function to print all transactions for a user
   int i;
-  for (i = 1; i <= N_T; i++)
+  for (i = 1; i <= number_transaction; i++)
     if (T[i].id_from == id)
       printf("%10.2f lei  %2d-%2d-%4d %60s\n", -T[i].amount, T[i].data.zi,
              T[i].data.luna, T[i].data.an, T[i].desc);
@@ -393,7 +393,7 @@ void export_to_csv(int logged_in_id) {
     }
 
     // Write transactions for the logged-in user to the CSV file
-    for (int i = 1; i <= N_T; i++) {
+    for (int i = 1; i <= number_transaction; i++) {
         if (T[i].id_from == logged_in_id || T[i].id_to == logged_in_id) {
             fprintf(csv_file, "%d,%d,%.2f,%d-%d-%d,%s\n",
                     T[i].id_from, T[i].id_to, T[i].amount,
@@ -414,11 +414,11 @@ void print_account_statement(int id) {
   int date_valide = 1;
   do {
     date_valide = 1;
-    printf("Day  : ");
+    printf("Day:");
     scanf("%d", &d1.zi);
-    printf("Month: ");
+    printf("Month:");
     scanf("%d", &d1.luna);
-    printf("Year : ");
+    printf("Year:");
     scanf("%d", &d1.an);
     if (!validate_date(d1)) {
       printf("Invalid date!\n");
@@ -429,11 +429,11 @@ void print_account_statement(int id) {
   date_valide = 1;
   do {
     date_valide = 1;
-    printf("Day  : ");
+    printf("Day:");
     scanf("%d", &d2.zi);
-    printf("Month: ");
+    printf("Month:");
     scanf("%d", &d2.luna);
-    printf("Year : ");
+    printf("Year:");
     scanf("%d", &d2.an);
     if (!validate_date(d2)) {
       printf("Invalid date!\n");
@@ -446,7 +446,7 @@ void print_account_statement(int id) {
   } while (date_valide == 0);
   int i = 0;
   float s_input = 0, s_output = 0;
-  for (i = 1; i <= N_T; i++) {
+  for (i = 1; i <= number_transaction; i++) {
     if (cmp_date(T[i].data, d1) >= 0 && cmp_date(T[i].data, d2) <= 0) {
       char str_data[20];
       data_to_str(T[i].data, str_data);
@@ -476,7 +476,7 @@ void print_customer_report(int id) {
   // Function to print a report of customers with whom the user has transacted
   printf("Customers: \n");
   int C[10000] = {}, i, j;
-  for (i = 1; i <= N_T; i++) {
+  for (i = 1; i <= number_transaction; i++) {
     if (T[i].id_from == id && T[i].id_to != 0)
       C[T[i].id_to] = 1;
     if (T[i].id_to == id && T[i].id_from != 0)
@@ -484,7 +484,7 @@ void print_customer_report(int id) {
   }
   for (i = 1; i <= 9999; i++)
     if (C[i] != 0)
-      for (j = 1; j <= N_A; j++)
+      for (j = 1; j <= number_account; j++)
         if (A[j].id == i)
           printf("%s\n", A[i].name);
 

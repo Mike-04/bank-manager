@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-int isalpha_or_space(char *s) {
+int letters_spaces(char *s) {
   // Function to check if a string consists of alphabetic characters or spaces
   // Returns 1 if the string is composed of alphabetic characters or spaces, 0
   // otherwise
@@ -11,7 +11,7 @@ int isalpha_or_space(char *s) {
       return 0;
   return 1;
 }
-int isalpha_or_number(char *s) {
+int letters_numbers(char *s) {
   // Function to check if a string consists of alphabetic characters or numbers
   // Returns 1 if the string is composed of alphabetic characters or numbers, 0
   // otherwise

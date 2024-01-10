@@ -6,11 +6,11 @@ typedef struct date {
 };
 struct date DC;
 
-int leap_year(int numar) {
+int leap_year(int year) {
   // Function to check if a given year is a leap year
-  if ((numar % 4 == 0) && (numar % 100 != 0))
+  if ((year % 4 == 0) && (year % 100 != 0))
     return 1;
-  if (numar % 400 == 0)
+  if (year % 400 == 0)
     return 1;
   return 0;
 }

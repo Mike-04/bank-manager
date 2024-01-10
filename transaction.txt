@@ -16,3 +16,6 @@
 4 1 150.00 7 1 2024 transfer to Popescu Mircea Sorin    from Toma Diana Violeta
 4 1 100.00 7 1 2024 transfer to Popescu Mircea Sorin    from Toma Diana Violeta
 4 2 25.00 7 1 2024 transfer to Ariton Anca Maria    from Toma Diana Violeta
+0 1 1000.00 10 1 2024 deposit
+1 0 90.00 10 1 2024 withdrawals
+1 2 200.00 10 1 2024 transfer to Ariton Anca Maria    from Popescu Mircea Sorin
