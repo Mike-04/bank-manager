@@ -18,8 +18,6 @@
 1
 10-1-2024 13:45:23 withdrawals  90.00
 1
-10-1-2024 13:45:32 transfer to   Ariton Anca Maria 200.00   lei
-1
 10-1-2024 13:45:38 All transaction report 
 1
 10-1-2024 13:46:18 Account statement 
@@ -27,3 +25,35 @@
 10-1-2024 13:46:30 Customer report  
 1
 10-1-2024 13:46:43 logout
+1
+10-1-2024 14:8:52 login
+1
+10-1-2024 14:8:54 export all transactions to CSV
+5
+10-1-2024 14:15:4 created account
+5
+10-1-2024 14:15:12 login
+5
+10-1-2024 14:15:15 Customer report  
+5
+10-1-2024 14:15:32 deposit  1000000.00
+5
+10-1-2024 14:15:38 transfer to   Alexandru Ionescu 1000.00   lei
+5
+10-1-2024 14:15:44 Customer report  
+1
+10-1-2024 14:19:48 login
+1
+10-1-2024 14:19:51 list sold  2035.00
+5
+10-1-2024 14:23:49 login
+5
+10-1-2024 14:23:53 export all transactions to CSV
+5
+10-1-2024 14:27:9 login
+5
+10-1-2024 14:27:11 export all transactions to CSV
+5
+10-1-2024 14:29:37 login
+5
+10-1-2024 14:29:41 export all transactions to CSV

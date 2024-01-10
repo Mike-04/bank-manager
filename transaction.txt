@@ -1,21 +1,16 @@
 0 1 200.00 7 1 2024 deposit
 1 0 100.00 7 1 2024 withdrawals
 0 2 500.00 7 1 2024 deposit
-2 1 200.00 7 1 2024 transfer to Popescu Mircea Sorin    from Ariton Anca Maria
 2 0 25.00 7 1 2024 withdrawals
 0 1 50.00 7 1 2024 deposit
 1 0 25.00 7 1 2024 withdrawals
-1 2 10.00 7 1 2024 transfer to Ariton Anca Maria    from Popescu Mircea Sorin
 0 3 50.00 7 1 2024 deposit
 3 0 5.00 7 1 2024 withdrawals
 3 0 10.00 7 1 2024 withdrawals
-3 2 15.00 7 1 2024 transfer to Ariton Anca Maria    from Oprea Marin Dumitru
 0 4 1000.00 7 1 2024 deposit
 4 0 300.00 7 1 2024 withdrawals
 4 0 200.00 7 1 2024 withdrawals
-4 1 150.00 7 1 2024 transfer to Popescu Mircea Sorin    from Toma Diana Violeta
-4 1 100.00 7 1 2024 transfer to Popescu Mircea Sorin    from Toma Diana Violeta
-4 2 25.00 7 1 2024 transfer to Ariton Anca Maria    from Toma Diana Violeta
 0 1 1000.00 10 1 2024 deposit
 1 0 90.00 10 1 2024 withdrawals
-1 2 200.00 10 1 2024 transfer to Ariton Anca Maria    from Popescu Mircea Sorin
+0 5 1000000.00 10 1 2024 deposit
+5 1 1000.00 10 1 2024 transfer to Alexandru Ionescu    from Mihai

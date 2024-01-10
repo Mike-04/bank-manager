@@ -205,11 +205,6 @@ int load_data_from_file() {
   }
   number_transaction--;
   fclose(f_trans);
-  /*
-  int i;
-  for (i = 1; i<=N_T; i++)
-      printf("%d %d %.2f %d-%d-%d %s\n", T[i].id_from, T[i].id_to, T[i].amount,
-  T[i].data.zi, T[i].data.luna, T[i].data.an, T[i].desc);*/
   return 1;
 }
 float user_balance(int id) {
@@ -377,36 +372,35 @@ void print_all_transactions(int id) {
   fclose(f_hist);
 }
 
-void export_to_csv(int logged_in_id) {
-    // Open the file for writing in append mode
-    FILE *csv_file = fopen("transactions.csv", "a");
+void export_to_csv(int id) {
+    FILE *csvFile = fopen("transactions.csv", "w");
 
-    if (csv_file == NULL) {
-        printf("Error opening file for export.\n");
-        return;
-    }
+    if (csvFile) {
+        fprintf(csvFile, "ID_From,ID_To,Amount,Date,Description\n");
 
-    // Add header if the file is empty
-    fseek(csv_file, 0, SEEK_END);
-    if (ftell(csv_file) == 0) {
-        fprintf(csv_file, "ID_From,ID_To,Amount,Date,Description\n");
-    }
+        for (int i = 1; i <= number_transaction; i++) {
+            if (T[i].id_from == id || T[i].id_to == id) {
+                char data[20] = "";
+                data_to_str(T[i].data, data);
 
-    // Write transactions for the logged-in user to the CSV file
-    for (int i = 1; i <= number_transaction; i++) {
-        if (T[i].id_from == logged_in_id || T[i].id_to == logged_in_id) {
-            fprintf(csv_file, "%d,%d,%.2f,%d-%d-%d,%s\n",
-                    T[i].id_from, T[i].id_to, T[i].amount,
-                    T[i].data.zi, T[i].data.luna, T[i].data.an,
-                    T[i].desc);
+                fprintf(csvFile, "%d,%d,%.2f,%s,%s\n", T[i].id_from, T[i].id_to, T[i].amount, data, T[i].desc);
+            }
         }
+
+        fclose(csvFile);
+
+        FILE *f_hist = fopen("history.txt", "a");
+        char timp[20]; 
+        set_current_time(timp); 
+        char data[20]; 
+        data_to_str(DC, data);
+        fprintf(f_hist, "%d\n%s %s %s\n", id, data, timp, "export all transactions to CSV");
+        fclose(f_hist);
+    } else {
+        printf("Error opening CSV file for writing\n");
     }
-
-    // Close the CSV file
-    fclose(csv_file);
-
-    printf("Transactions for ID %d exported to 'transactions.csv' successfully.\n", logged_in_id);
 }
+
 void print_account_statement(int id) {
   // Function to print account statement for a user within a date range
   struct date d1, d2;
